@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<flow xmlns="http://www.springframework.org/schema/webflow"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:schemaLocation="http://www.springframework.org/schema/webflow
+                          http://www.springframework.org/schema/webflow/spring-webflow.xsd">
+	
+	<var name="userId" class="java.lang.String"/>
+
+    <view-state id="register">
+        <transition on="register" to="createUser"/>
+        <transition on="cancel" to="canceled"/>
+    </view-state>
+
+	<action-state id="createUser">
+		<evaluate expression="userRegistrationService.createUserAndGetId()" 
+				result="userId"/>
+		<transition to="created" />
+	</action-state>
+
+    <view-state id="created"  >
+    </view-state>
+    
+    <view-state id="canceled">
+    	<transition on="restart" to="register"/>
+    </view-state>
+
+</flow>
